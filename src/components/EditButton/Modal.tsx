@@ -4,16 +4,17 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { TasksContext } from "../../contexts/Tasks";
 
 interface ModalProps {
+  id: number;
+  title: string;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export function Modal({ setOpen }: ModalProps) {
-  const { addTask } = useContext(TasksContext);
-  const [taskTitle, setTaskTitle] = useState("");
+export function Modal({ id, title, setOpen }: ModalProps) {
+  const { editTask } = useContext(TasksContext);
+  const [taskTitle, setTaskTitle] = useState(title);
 
   const submitTask = () => {
-    addTask(taskTitle);
-    setTaskTitle("");
+    editTask(id, taskTitle);
     setOpen(false);
   };
 
@@ -23,7 +24,7 @@ export function Modal({ setOpen }: ModalProps) {
       <Dialog.Content className="w-11/12 max-w-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-700 py-6 px-5 rounded">
         <form className=" flex flex-col gap-4" onSubmit={() => submitTask()}>
           <Dialog.Title className="text-white text-2xl font-medium">
-            Adicionar uma nova tarefa
+            Editar tarefa
           </Dialog.Title>
           <input
             placeholder="Digite a tarefa"
@@ -39,7 +40,7 @@ export function Modal({ setOpen }: ModalProps) {
               className="bg-indigo-600 py-2 px-4 rounded text-white text-sm"
               type="submit"
             >
-              Adicionar
+              Editar
             </button>
           </div>
         </form>

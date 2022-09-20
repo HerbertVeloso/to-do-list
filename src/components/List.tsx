@@ -18,7 +18,10 @@ export function List() {
         )}
       </section>
       <section className="flex items-center gap-2">
-        <p className="flex-1">Você tem {tasks.length} tarefas pendentes</p>
+        <p className="flex-1">
+          Você tem {tasks.length} tarefa{tasks.length == 1 ? "" : "s"} pendente
+          {tasks.length == 1 ? "" : "s"}
+        </p>
         <AddButton small={true} />
         <button
           className="bg-rose-700 rounded p-3"
