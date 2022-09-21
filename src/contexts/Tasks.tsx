@@ -5,6 +5,7 @@ import { Task } from "../types/Task";
 interface TasksContextProps {
   tasks: Array<Task>;
   addTask: (title: string) => void;
+  clearTasks: () => void;
 }
 
 export const TasksContext = createContext({} as TasksContextProps);
@@ -24,8 +25,12 @@ export function TasksProvider({ children }: TasksProviderProps) {
     setTasks((prevTasks) => [...prevTasks, task]);
   }
 
+  function clearTasks() {
+    setTasks([]);
+  }
+
   return (
-    <TasksContext.Provider value={{ tasks, addTask }}>
+    <TasksContext.Provider value={{ tasks, addTask, clearTasks }}>
       {children}
     </TasksContext.Provider>
   );
