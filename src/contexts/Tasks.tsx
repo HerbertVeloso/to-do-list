@@ -8,6 +8,7 @@ interface TasksContextProps {
   clearTasks: () => void;
   editTask: (id: number, title: string) => void;
   deleteTask: (id: number) => void;
+  toggleTaskStatus: (id: number) => void;
 }
 
 export const TasksContext = createContext({} as TasksContextProps);
@@ -22,7 +23,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
   function addTask(title: string) {
     const task: Task = {
       title,
-      finish: false,
+      finished: false,
     };
     setTasks((prevTasks) => [...prevTasks, task]);
   }
@@ -30,6 +31,12 @@ export function TasksProvider({ children }: TasksProviderProps) {
   function editTask(id: number, title: string) {
     let tasksAux = [...tasks];
     tasksAux[id].title = title;
+    setTasks(tasksAux);
+  }
+
+  function toggleTaskStatus(id: number) {
+    let tasksAux = [...tasks];
+    tasksAux[id].finished = !tasksAux[id].finished;
     setTasks(tasksAux);
   }
 
@@ -45,7 +52,14 @@ export function TasksProvider({ children }: TasksProviderProps) {
 
   return (
     <TasksContext.Provider
-      value={{ tasks, addTask, clearTasks, editTask, deleteTask }}
+      value={{
+        tasks,
+        addTask,
+        clearTasks,
+        editTask,
+        deleteTask,
+        toggleTaskStatus,
+      }}
     >
       {children}
     </TasksContext.Provider>
